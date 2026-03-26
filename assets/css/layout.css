@@ -1,0 +1,49 @@
+/* PAGE LAYOUT */
+.page-layout {
+    display: grid;
+    grid-template-columns: 270px 1fr;
+    min-height: 100vh;
+}
+
+/* MAIN CONTENT AREA */
+.main-content {
+    padding: 32px;
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    gap: 22px;
+    align-content: start;
+}
+
+/* PAGE HEADER */
+.page-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: 16px;
+}
+
+.page-header-text {
+    display: grid;
+    gap: 4px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+    .page-layout {
+        grid-template-columns: 220px 1fr;
+    }
+
+    .main-content {
+        padding: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .page-header {
+        grid-template-columns: 1fr;
+    }
+}

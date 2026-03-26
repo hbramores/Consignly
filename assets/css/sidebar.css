@@ -1,0 +1,110 @@
+/* SIDEBAR */
+.sidebar {
+    background: var(--white);
+    border-right: 1px solid var(--border);
+    padding: 24px 18px;
+    display: grid;
+    grid-template-rows: auto auto auto auto auto;
+    align-content: start;
+    gap: 14px;
+}
+
+/* LOGO */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 18px;
+}
+
+.logo img {
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+    border-radius: 10px;
+    background: #f1f1f1;
+}
+
+/* SECTION LABELS */
+.menu-title,
+.profile-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+/* NAVIGATION */
+.nav {
+    display: grid;
+    gap: 8px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--text-primary);
+    padding: 10px 10px;
+    border-radius: 12px;
+    transition: 0.2s ease;
+}
+
+.nav-item img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.nav-item span {
+    font-size: 15px;
+}
+
+.nav-item:hover {
+    background: var(--soft-pink);
+    color: var(--white);
+}
+
+.nav-item.active {
+    background: #f7e8ed;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+/* DIVIDER */
+.sidebar hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 8px 0;
+}
+
+/* PROFILE */
+.profile {
+    display: grid;
+    gap: 8px;
+}
+
+.profile img {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #f1f1f1;
+}
+
+.profile p {
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.profile a {
+    text-decoration: none;
+    color: var(--danger-dark);
+    font-size: 14px;
+    font-weight: 600;
+}

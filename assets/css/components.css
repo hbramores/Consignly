@@ -1,0 +1,69 @@
+/* BUTTONS */
+.btn {
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+}
+
+.btn-outline {
+    background: var(--white);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-outline:hover {
+    background: #faf1f5;
+}
+
+/* INPUTS */
+.filter,
+.input {
+    width: 100%;
+    height: 44px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0 14px;
+    font-size: 14px;
+    background: var(--white);
+    outline: none;
+    color: var(--text-primary);
+}
+
+.filter:focus,
+.input:focus {
+    border-color: var(--primary);
+}
+
+/* COMMON ICON BUTTON AREA */
+.add-product-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.add-product-btn img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+#filter-btn {
+    background-color:var(--primary) !important;
+    color: white;
+}
