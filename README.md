@@ -1,16 +1,93 @@
-# React + Vite
+# Consignly
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Name
+Consignly - Consignment Inventory and Sales Monitoring System
 
-Currently, two official plugins are available:
+Course / Subject
+1. Website Development
+2. Presentation, Negotiation and Consultation
+3. Database Management
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Developer
+Hana B. Ramores
 
-## React Compiler
+Year & Section
+2026 (3078)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Institution
+University of Nueva Caceres
 
-## Expanding the ESLint configuration
+## Description
+Consignly is a full-stack web-based system designed for managing consignment businesses. It helps track inventory, monitor stock levels, manage products, and generate reports for sales and performance analysis.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The system supports multiple user roles such as Admin and Shop Owners, each with their own dashboard and functionalities.
+
+## Features
+- User Authentication (Admin / Shop Owner)
+- Admin Dashboard
+- Shop Owner Dashboard
+- Product Management
+- Stock Monitoring
+- Shop Management
+- Reports Generation
+- Activity Logging (Audit Trail)
+
+## Tech Stack
+Frontend:
+- React (Vite)
+- JSX
+- Tailwind / ShadCN UI
+
+Backend:
+- Node.js
+- Express.js
+
+Database:
+- MySQL / MariaDB
+
+---
+
+Project Structure
+backend/
+- controllers/
+- routes/
+- middleware/
+- uploads/
+- db.js
+- server.js
+
+frontend/
+- src/
+  - components/
+  - pages/
+  - App.jsx
+
+---
+
+Setup Instructions
+
+Clone Repository
+git clone https://github.com/[your-username]/consignly.git
+
+Backend Setup
+cd backend
+npm install
+npm run dev
+
+Frontend Setup
+cd frontend
+npm install
+npm run dev
+
+
+## Environment Variables (.env)
+PORT=5000
+DB_HOST=localhost
+DB_NAME=consignly
+
+---
+
+## Notes
+This project is developed for academic purposes and demonstrates full-stack development using modern web technologies.
+
+---
