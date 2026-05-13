@@ -1,0 +1,44 @@
+.sidebar-profile {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.profile-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-icon {
+  width: 40px;
+  height: 40px;
+
+  border: 1px solid #ccc;
+  border-radius: 6px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-name {
+  margin: 0;
+  font-weight: bold;
+}
+
+.profile-email {
+  margin: 0;
+  font-size: 12px;
+  color: gray;
+}
+
+.logout-btn {
+  margin-top: 4px;
+}
