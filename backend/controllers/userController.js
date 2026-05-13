@@ -1,3 +1,5 @@
+// has functions to get user list, deactivate user, and approve user
+
 const db = require("../db");
 
 exports.getUsers = (req, res) => {

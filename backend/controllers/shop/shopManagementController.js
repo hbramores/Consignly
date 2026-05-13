@@ -1,3 +1,4 @@
+// has function createshop, getshops, recordadvance, getarchivedshops, getadvancepayments, updateshop, activateShop, and archiveShop for shop management
 //shopManagementController.js
 const db = require("../../db");
 const {

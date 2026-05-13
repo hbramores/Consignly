@@ -1,3 +1,4 @@
+// has function assignInventory, getShopInventory, getAvailableProducts, and updateShopSellingPrice for shop inventory management
 //ShopInventoryController.js
 const db = require("../../db");
 const { isInteger } = require("../../utils/validation");

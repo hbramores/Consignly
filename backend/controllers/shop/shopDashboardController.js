@@ -1,3 +1,4 @@
+// has functions getShopDashboardSummary and getShopProductSummary for shop dashboard data
 // shopDashboardController.js
 const db = require("../../db");
 

@@ -1,3 +1,5 @@
+// has functions shoplogin
+
 //shopAuthController.js
 const db = require("../../db");
 const { CODE_PATTERN } = require("../../utils/validation");

@@ -1,3 +1,4 @@
+// enables file upload and store it in the uploads folder
 const multer = require("multer");
 const path = require("path");
 

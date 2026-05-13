@@ -1,3 +1,5 @@
+// has only 5 functions: getDateRange, formatDateTime, addCommonFilters, getReportFilters and getReports.
+
 const db = require("../db");
 
 const emptyReport = {

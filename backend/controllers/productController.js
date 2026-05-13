@@ -1,3 +1,5 @@
+// has 4 functions: getProducts, addProduct, deleteProduct, updateProduct.
+
 const db = require('../db');
 const {
   CODE_PATTERN,

@@ -1,6 +1,10 @@
+
+// has only 2 functions: signin and signup.
+
 const db = require("../db");
 const { USERNAME_PATTERN } = require("../utils/validation");
 
+// Signin
 exports.signin = (req, res) => {
   const { username, password } = req.body;
 
@@ -47,6 +51,7 @@ exports.signin = (req, res) => {
   });
 };
 
+// signup
 exports.signup = (req, res) => {
   const { username, password, role } = req.body;
 

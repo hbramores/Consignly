@@ -1,3 +1,4 @@
+// has functions recordShopSale, returnAllToArtisan, getShopSalesHistory, getReturnedProducts, confirmReturn, and rejectReturn for handling shop transactions
 //shopTransactionController.js
 const db = require("../../db");
 const { isInteger, isOptionalText } = require("../../utils/validation");

@@ -1,3 +1,5 @@
+// has only 1 function: getDashboardSummary.
+
 const db = require("../db");
 
 const getDashboardSummary = (req, res) => {

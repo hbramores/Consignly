@@ -1,3 +1,5 @@
+// has functions to get stock list, update stock, and get stock movements for a user
+
 const db = require("../db");
 const { isInteger, isOptionalText } = require("../utils/validation");
 
