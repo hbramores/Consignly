@@ -17,14 +17,10 @@ Hana B. Ramores
 ## Institution
 University of Nueva Caceres
 
----
-
 ## Description
 Consignly is a full-stack web-based system designed for managing consignment businesses. It helps track inventory, monitor stock levels, manage products, and generate reports for sales and performance analysis.
 
 The system supports multiple user roles such as Admin and Shop Owners, each with their own dashboard and functionalities.
-
----
 
 ## Features
 - User Authentication (Admin / Shop Owner)
