@@ -64,8 +64,27 @@ exports.getShops = (req, res) => {
   const { user_id } = req.params;
 
   const sql = `
-    SELECT * FROM shops
-    WHERE user_id = ? AND status = 'active'
+    SELECT
+      sh.*,
+      COALESCE(sales_data.total_sales, 0) -
+        COALESCE(sales_data.total_commission, 0) -
+        COALESCE(advance_data.total_advance, 0) AS outstanding_balance
+    FROM shops sh
+    LEFT JOIN (
+      SELECT
+        shop_id,
+        SUM(total_amount) AS total_sales,
+        SUM(commission_amount * quantity) AS total_commission
+      FROM sales
+      GROUP BY shop_id
+    ) sales_data ON sh.id = sales_data.shop_id
+    LEFT JOIN (
+      SELECT shop_id, SUM(amount) AS total_advance
+      FROM advance_payments
+      GROUP BY shop_id
+    ) advance_data ON sh.id = advance_data.shop_id
+    WHERE sh.user_id = ? AND sh.status = 'active'
+    ORDER BY sh.shop_name ASC
   `;
 
   db.query(sql, [user_id], (err, result) => {

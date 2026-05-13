@@ -341,6 +341,12 @@ function Shops({ user, onManageShop, pageAction, setPageAction }) {
                   Contract Type:{" "}
                   {shop.contract_type === "percentage" ? "Percentage" : "Manual Pricing"}
                 </p>
+                <div className="rounded-md border bg-muted/40 p-3">
+                  <p className="text-xs text-muted-foreground">Outstanding Balance</p>
+                  <p className="text-lg font-semibold">
+                    PHP {Number(shop.outstanding_balance || 0).toFixed(2)}
+                  </p>
+                </div>
                 <p>Code: {shop.access_code}</p>
 
                 <div className="flex flex-wrap gap-2 pt-2">

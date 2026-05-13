@@ -271,8 +271,14 @@ exports.confirmReturn = (req, res) => {
   const { return_id } = req.params;
 
   const getReturnSql = `
-    SELECT * FROM returns
-    WHERE id = ? AND status = 'pending'
+    SELECT
+      r.*,
+      sh.shop_name,
+      p.user_id
+    FROM returns r
+    JOIN shops sh ON r.shop_id = sh.id
+    JOIN products p ON r.product_id = p.id
+    WHERE r.id = ? AND r.status = 'pending'
   `;
 
   db.query(getReturnSql, [return_id], (err, result) => {
@@ -284,30 +290,63 @@ exports.confirmReturn = (req, res) => {
 
     const returnData = result[0];
 
-    db.query(
-      "UPDATE returns SET status = 'confirmed' WHERE id = ?",
-      [return_id],
-      (err) => {
-        if (err) {
-          return res.status(500).json({ message: "Failed to confirm return" });
-        }
+    db.query("SELECT quantity FROM main_inventory WHERE product_id = ?", [returnData.product_id], (err, stockResult) => {
+      if (err) return res.status(500).json(err);
 
-        db.query(
-          "UPDATE main_inventory SET quantity = quantity + ? WHERE product_id = ?",
-          [returnData.quantity, returnData.product_id],
-          (err) => {
+      const previousStock = stockResult.length > 0 ? Number(stockResult[0].quantity) : 0;
+      const returnQty = Number(returnData.quantity);
+      const newStock = previousStock + returnQty;
+
+      db.query(
+        "UPDATE returns SET status = 'confirmed' WHERE id = ?",
+        [return_id],
+        (err) => {
+          if (err) {
+            return res.status(500).json({ message: "Failed to confirm return" });
+          }
+
+          const upsertInventorySql = `
+            INSERT INTO main_inventory (product_id, quantity)
+            VALUES (?, ?)
+            ON DUPLICATE KEY UPDATE quantity = ?
+          `;
+
+          db.query(upsertInventorySql, [returnData.product_id, newStock, newStock], (err) => {
             if (err) {
               return res.status(500).json({ message: "Failed to update main inventory" });
             }
 
-            res.json({
-              success: true,
-              message: "Return confirmed successfully",
-            });
-          }
-        );
-      }
-    );
+            const insertMovementSql = `
+              INSERT INTO stock_movements
+              (product_id, user_id, type, quantity, previous_stock, new_stock, notes)
+              VALUES (?, ?, 'stock_in', ?, ?, ?, ?)
+            `;
+
+            db.query(
+              insertMovementSql,
+              [
+                returnData.product_id,
+                returnData.user_id,
+                returnQty,
+                previousStock,
+                newStock,
+                `Returned from ${returnData.shop_name}`,
+              ],
+              (err) => {
+                if (err) {
+                  return res.status(500).json({ message: "Failed to record stock movement" });
+                }
+
+                res.json({
+                  success: true,
+                  message: "Return confirmed successfully",
+                });
+              }
+            );
+          });
+        }
+      );
+    });
   });
 };
 
