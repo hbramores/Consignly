@@ -3,18 +3,18 @@
 ## Project Name
 Consignly - Consignment Inventory and Sales Monitoring System
 
-## Course / Subject
+Course / Subject
 1. Website Development
 2. Presentation, Negotiation and Consultation
 3. Database Management
 
-## Developer
+Developer
 Hana B. Ramores
 
-## Year & Section
+Year & Section
 2026 (3078)
 
-## Institution
+Institution
 University of Nueva Caceres
 
 ## Description
@@ -32,8 +32,6 @@ The system supports multiple user roles such as Admin and Shop Owners, each with
 - Reports Generation
 - Activity Logging (Audit Trail)
 
----
-
 ## Tech Stack
 Frontend:
 - React (Vite)
@@ -49,7 +47,7 @@ Database:
 
 ---
 
-## Project Structure
+Project Structure
 backend/
 - controllers/
 - routes/
@@ -66,22 +64,21 @@ frontend/
 
 ---
 
-## Setup Instructions
+Setup Instructions
 
-### Clone Repository
+Clone Repository
 git clone https://github.com/[your-username]/consignly.git
 
-### Backend Setup
+Backend Setup
 cd backend
 npm install
 npm run dev
 
-### Frontend Setup
+Frontend Setup
 cd frontend
 npm install
 npm run dev
 
----
 
 ## Environment Variables (.env)
 PORT=5000
