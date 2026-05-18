@@ -58,21 +58,21 @@ Database:
 ---
 
 Project Structure
-backend/
+Consignly/
 
-- controllers/
-- routes/
-- middleware/
-- uploads/
-- db.js
-- server.js
+- backend/
+  - controllers/
+  - routes/
+  - middleware/
+  - uploads/
+  - db.js
+  - server.js
 
-frontend/
-
-- src/
-  - components/
-  - pages/
-  - App.jsx
+- frontend/
+  - src/
+    - components/
+    - pages/
+    - App.jsx
 
 ---
 
@@ -82,11 +82,16 @@ Clone Repository
 git clone https://github.com/hbramores/consignly.git
 
 Backend Setup
+From the project root:
+
 cd backend
 npm install
 npm run dev
 
 Frontend Setup
+From the project root, in a second terminal:
+
+cd frontend
 npm install
 npm run dev
 

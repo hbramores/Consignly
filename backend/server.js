@@ -1,9 +1,10 @@
 // includes most of your queries
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 // Routes
 const productRoutes = require("./routes/productRoutes");
@@ -17,7 +18,7 @@ const reportRoutes = require("./routes/reportRoutes");
 //Use
 app.use(cors());
 app.use(express.json());
-app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 app.use(authRoutes);
