@@ -13,8 +13,8 @@ function ProductForm({
   setProductName,
   description,
   setDescription,
-  retailPrice,
-  setRetailPrice,
+  basePrice,
+  setBasePrice,
   minimumStock,
   setMinimumStock,
   onCancel,
@@ -86,9 +86,9 @@ function ProductForm({
           <Input
             type="number"
             placeholder="Base / Artisan Price"
-            value={retailPrice}
+            value={basePrice}
             onChange={(e) =>
-              setRetailPrice(e.target.value)
+              setBasePrice(e.target.value)
             }
             min="0.01"
             step="0.01"

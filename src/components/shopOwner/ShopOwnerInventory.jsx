@@ -77,13 +77,13 @@ function ShopOwnerInventory({
                   <TableCell>{item.product_code}</TableCell>
                   <TableCell>{item.quantity}</TableCell>
                   <TableCell>{item.sold_quantity || 0}</TableCell>
-                  <TableCell>{money(item.retail_price)}</TableCell>
+                  <TableCell>{money(item.base_price)}</TableCell>
                   <TableCell>
                     <div className="space-y-2">
                       <p>
                         {item.contract_type === "percentage"
                           ? money(
-                              Number(item.retail_price || 0) *
+                              Number(item.base_price || 0) *
                                 (1 + Number(item.commission_rate || 0) / 100)
                             )
                           : item.shop_selling_price

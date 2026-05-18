@@ -22,7 +22,7 @@ exports.assignInventory = (req, res) => {
       mi.product_id,
       mi.quantity,
       p.product_name,
-      p.retail_price
+      p.base_price
     FROM main_inventory mi
     JOIN products p ON mi.product_id = p.id
     WHERE mi.product_id IN (?) AND p.user_id = ?
@@ -64,9 +64,9 @@ exports.assignInventory = (req, res) => {
         assignQty,
         user_id,
         contractType === "manual_pricing"
-          ? Number(product.retail_price)
-          : Number(product.retail_price) + (Number(product.retail_price) * commissionRate / 100),
-        Number(product.retail_price)
+          ? Number(product.base_price)
+          : Number(product.base_price) + (Number(product.base_price) * commissionRate / 100),
+        Number(product.base_price)
       ];
     });
 
@@ -114,7 +114,7 @@ exports.getShopInventory = (req, res) => {
       p.id AS product_id,
       p.product_name,
       p.product_code,
-      p.retail_price,
+      p.base_price,
       p.image,
       p.category,
 

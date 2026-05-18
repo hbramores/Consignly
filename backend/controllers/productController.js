@@ -47,7 +47,7 @@ exports.addProduct = (req, res) => {
     category,
     product_name,
     description,
-    retail_price,
+    base_price,
     minimum_stock,
     user_id
   } = req.body;
@@ -60,7 +60,7 @@ exports.addProduct = (req, res) => {
     !isRequiredText(category, NAME_PATTERN) ||
     !isRequiredText(product_name, NAME_PATTERN) ||
     !isOptionalText(description) ||
-    !isPositiveNumber(retail_price) ||
+    !isPositiveNumber(base_price) ||
     !isPositiveNumber(minimum_stock)
   ) {
     return res.status(400).json({ message: "Invalid product field format" });
@@ -86,7 +86,7 @@ exports.addProduct = (req, res) => {
 
     const sql = `
       INSERT INTO products 
-      (product_code, category, product_name, description, image, retail_price, minimum_stock, status, user_id)
+      (product_code, category, product_name, description, image, base_price, minimum_stock, status, user_id)
       VALUES (?, ?, ?, ?, ?, ?, ?, 'active', ?)
     `;
 
@@ -96,7 +96,7 @@ exports.addProduct = (req, res) => {
       product_name,
       description,
       image,
-      retail_price,
+      base_price,
       minimum_stock,
       user_id
     ];
@@ -137,7 +137,7 @@ exports.updateProduct = (req, res) => {
     category,
     product_name,
     description,
-    retail_price,
+    base_price,
     minimum_stock
   } = req.body;
 
@@ -148,7 +148,7 @@ exports.updateProduct = (req, res) => {
     !isRequiredText(category, NAME_PATTERN) ||
     !isRequiredText(product_name, NAME_PATTERN) ||
     !isOptionalText(description) ||
-    !isPositiveNumber(retail_price) ||
+    !isPositiveNumber(base_price) ||
     !isPositiveNumber(minimum_stock)
   ) {
     return res.status(400).json({ message: "Invalid product field format" });
@@ -162,7 +162,7 @@ exports.updateProduct = (req, res) => {
 
     sql = `
       UPDATE products
-      SET product_code=?, category=?, product_name=?, description=?, image=?, retail_price=?, minimum_stock=?
+      SET product_code=?, category=?, product_name=?, description=?, image=?, base_price=?, minimum_stock=?
       WHERE id=?
     `;
 
@@ -172,14 +172,14 @@ exports.updateProduct = (req, res) => {
       product_name,
       description,
       image,
-      retail_price,
+      base_price,
       minimum_stock,
       id
     ];
   } else {
     sql = `
       UPDATE products
-      SET product_code=?, category=?, product_name=?, description=?, retail_price=?, minimum_stock=?
+      SET product_code=?, category=?, product_name=?, description=?, base_price=?, minimum_stock=?
       WHERE id=?
     `;
 
@@ -188,7 +188,7 @@ exports.updateProduct = (req, res) => {
       normalizedCategory,
       product_name,
       description,
-      retail_price,
+      base_price,
       minimum_stock,
       id
     ];

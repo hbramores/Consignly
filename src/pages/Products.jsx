@@ -25,7 +25,7 @@ function Products({ user, pageAction, setPageAction }) {
   const [productName, setProductName] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
-  const [retailPrice, setRetailPrice] = useState("");
+  const [basePrice, setBasePrice] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
   const [minimumStock, setMinimumStock] = useState("");
@@ -35,7 +35,7 @@ function Products({ user, pageAction, setPageAction }) {
     setProductName("");
     setDescription("");
     setImage(null);
-    setRetailPrice("");
+    setBasePrice("");
     setMinimumStock("");
     setIsEditing(false);
     setEditId(null);
@@ -81,14 +81,14 @@ function Products({ user, pageAction, setPageAction }) {
       !isNonEmpty(productCode) ||
       !isNonEmpty(category) ||
       !isNonEmpty(productName) ||
-      !isNonEmpty(retailPrice) ||
+      !isNonEmpty(basePrice) ||
       !isNonEmpty(minimumStock)
     ) {
       alert("Please fill in all required fields");
       return;
     }
 
-    if (!isPositiveNumber(retailPrice) || !isPositiveNumber(minimumStock)) {
+    if (!isPositiveNumber(basePrice) || !isPositiveNumber(minimumStock)) {
       alert("Price and minimum stock must be greater than 0");
       return;
     }
@@ -105,7 +105,7 @@ function Products({ user, pageAction, setPageAction }) {
     formData.append("product_name", productName);
     formData.append("description", description);
     formData.append("image", image);
-    formData.append("retail_price", retailPrice);
+    formData.append("base_price", basePrice);
     formData.append("minimum_stock", minimumStock);
     formData.append("user_id", user.id);
 
@@ -150,7 +150,7 @@ function Products({ user, pageAction, setPageAction }) {
     setCategory(normalizeCategory(item.category));
     setProductName(item.product_name);
     setDescription(item.description);
-    setRetailPrice(item.retail_price);
+    setBasePrice(item.base_price);
     setImage(null);
     setMinimumStock(item.minimum_stock);
 
@@ -163,14 +163,14 @@ function Products({ user, pageAction, setPageAction }) {
       !isNonEmpty(productCode) ||
       !isNonEmpty(category) ||
       !isNonEmpty(productName) ||
-      !isNonEmpty(retailPrice) ||
+      !isNonEmpty(basePrice) ||
       !isNonEmpty(minimumStock)
     ) {
       alert("Please fill in all required fields");
       return;
     }
 
-    if (!isPositiveNumber(retailPrice) || !isPositiveNumber(minimumStock)) {
+    if (!isPositiveNumber(basePrice) || !isPositiveNumber(minimumStock)) {
       alert("Price and minimum stock must be greater than 0");
       return;
     }
@@ -192,7 +192,7 @@ function Products({ user, pageAction, setPageAction }) {
       formData.append("image", image);
     }
 
-    formData.append("retail_price", retailPrice);
+    formData.append("base_price", basePrice);
     formData.append("minimum_stock", minimumStock);
 
     const res = await fetch(`http://localhost:5000/products/${editId}`, {
@@ -288,8 +288,8 @@ function Products({ user, pageAction, setPageAction }) {
               description={description}
               setDescription={setDescription}
               setImage={setImage}
-              retailPrice={retailPrice}
-              setRetailPrice={setRetailPrice}
+              basePrice={basePrice}
+              setBasePrice={setBasePrice}
               minimumStock={minimumStock}
               setMinimumStock={setMinimumStock}
               onCancel={() => {

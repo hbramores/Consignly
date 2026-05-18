@@ -18,7 +18,6 @@ exports.shopLogin = (req, res) => {
       commission_rate, 
       contract_type,
       access_code, 
-      shop_link, 
       status
     FROM shops
     WHERE access_code = ? AND status = 'active'

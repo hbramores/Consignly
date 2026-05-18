@@ -25,7 +25,7 @@ function ProductCard({ item, onEdit, onDelete }) {
         <p>{item.description}</p>
         <p>
           <span className="font-medium text-foreground">Base Price:</span>{" "}
-          ₱{item.retail_price}
+          PHP {Number(item.base_price || 0).toFixed(2)}
         </p>
       </div>
 

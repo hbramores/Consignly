@@ -15,22 +15,85 @@ import ShopOwnerDashboard from "./pages/ShopOwnerDashboard";
 import ManageShop from "./pages/ManageShop";
 
 import Sidebar from "./components/Sidebar"
-import AuthCard from './components/AuthCard.jsx'
+import LoginForm from "./components/LoginForm";
+import RegisterForm from "./components/RegisterForm";
 import Dashboard from "./pages/Dashboard"
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from "./components/ui/button";
+import { Toaster } from "./components/ui/toaster";
 
 const AUTH_BACKGROUND_IMAGE = authBg;
+const SESSION_KEY = "consignly-session";
+const APP_PAGES = new Set(["dashboard", "products", "stocks", "shops", "manageShop", "reports"]);
+
+function getPageFromHash() {
+  const page = window.location.hash.replace(/^#\/?/, "");
+  return APP_PAGES.has(page) ? page : "dashboard";
+}
+
+function getStoredUser() {
+  try {
+    const storedSession = sessionStorage.getItem(SESSION_KEY);
+    return storedSession ? JSON.parse(storedSession) : null;
+  } catch {
+    sessionStorage.removeItem(SESSION_KEY);
+    return null;
+  }
+}
 
 function App() {
   const [mode, setMode] = useState("signin");
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [currentPage, setCurrentPage] = useState("dashboard")
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(getStoredUser);
+  const [currentPage, setCurrentPage] = useState(getPageFromHash)
   const [pageAction, setPageAction] = useState(null);
   const [shop, setShop] = useState(null);
   const [view, setView] = useState("main");
   const [selectedShop, setSelectedShop] = useState(null);
+  const [toast, setToast] = useState(null);
+
+  const isLoggedIn = Boolean(user);
+
+  useEffect(() => {
+    function syncPageFromHash() {
+      setCurrentPage(getPageFromHash());
+    }
+
+    window.addEventListener("popstate", syncPageFromHash);
+    return () => window.removeEventListener("popstate", syncPageFromHash);
+  }, []);
+
+  useEffect(() => {
+    if (!toast) {
+      return undefined;
+    }
+
+    const timer = window.setTimeout(() => setToast(null), 3000);
+    return () => window.clearTimeout(timer);
+  }, [toast]);
+
+  function navigateToPage(page) {
+    setCurrentPage(page);
+  }
+
+  function handleLoginSuccess(userData) {
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify(userData));
+    setUser(userData);
+    navigateToPage("dashboard");
+    window.history.pushState(null, "", "#/dashboard");
+    setToast({
+      title: "Login successful",
+      description: `Welcome back, ${userData.username}.`,
+    });
+  }
+
+  function handleLogout() {
+    sessionStorage.removeItem(SESSION_KEY);
+    setUser(null);
+    setCurrentPage("dashboard");
+    setPageAction(null);
+    setSelectedShop(null);
+    window.history.pushState(null, "", "#/login");
+  }
   
   const handleShopLogin = (shopData) => {
   setShop(shopData);
@@ -40,36 +103,13 @@ function App() {
   setShop(null);
   };
 
-  let title;
-  let description;
-  let buttonText;
-  let subDescription;
-  let onSwitch;
-
-  if (mode === "signin") {
-    title = "Sign In";
-    description = "Please enter your credentials.";
-    buttonText = "Sign In";
-    subDescription = "Create an account";
-    onSwitch = () => setMode("signup");
-  } else {
-    title = "Sign Up";
-    description = "Please fill in the form to create an account.";
-    buttonText = "Sign Up";
-    subDescription = "Already have an account?";
-    onSwitch = () => setMode("signin");
-  }
-
   let pageToShow;
 
   if (user?.role === "admin") {
     pageToShow = (
       <AdminDashboard 
         user={user}
-        onLogout={() => {
-          setIsLoggedIn(false);
-          setUser(null);
-        }}
+        onLogout={handleLogout}
       />
     );
   } else if (user?.role === "user") {
@@ -105,7 +145,7 @@ function App() {
           setPageAction={setPageAction}
           onManageShop={(shopData) => {
             setSelectedShop(shopData);
-            setCurrentPage("manageShop");
+            navigateToPage("manageShop");
           }}
         />
       );
@@ -123,6 +163,7 @@ function App() {
 
   return (
     <div>
+      <Toaster toast={toast} onClose={() => setToast(null)} />
 
       {shop ? (
         <ShopOwnerDashboard shop={shop} onLogout={handleShopLogout} />
@@ -133,11 +174,8 @@ function App() {
           {/* SIDEBAR */}
           {user?.role === "user" && (
             <Sidebar
-              setCurrentPage={setCurrentPage}
-              onLogout={() => {
-                setIsLoggedIn(false);
-                setUser(null);
-              }}
+              setCurrentPage={navigateToPage}
+              onLogout={handleLogout}
               currentPage={currentPage}
               user={user}
             />
@@ -166,17 +204,17 @@ function App() {
                 Go to Shop Owner Portal
               </Button>
 
-              <AuthCard
-                title={title}
-                description={description}
-                buttonText={buttonText}
-                subDescription={subDescription}
-                onSwitch={onSwitch}
-                onLoginSuccess={(userData) => {
-                  setIsLoggedIn(true);
-                  setUser(userData);
-                }}
-              />
+              {mode === "signin" ? (
+                <LoginForm
+                  onLoginSuccess={handleLoginSuccess}
+                  onSwitchToRegister={() => setMode("signup")}
+                />
+              ) : (
+                <RegisterForm
+                  onRegistered={() => setMode("signin")}
+                  onSwitchToLogin={() => setMode("signin")}
+                />
+              )}
             </div>
           </section>
 

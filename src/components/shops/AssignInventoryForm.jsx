@@ -78,7 +78,7 @@ function AssignInventoryForm({
                 <span>
                 {product.product_name}
                 {" - "}
-                PHP {Number(product.retail_price || 0).toLocaleString()}
+                PHP {Number(product.base_price || 0).toLocaleString()}
                 {" - "}
                 Available: {product.quantity}
               </span>

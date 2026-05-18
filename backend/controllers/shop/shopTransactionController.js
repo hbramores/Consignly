@@ -6,7 +6,7 @@ const { isInteger, isOptionalText } = require("../../utils/validation");
 // Record Shop Sale
 exports.recordShopSale = (req, res) => {
   const { shop_id } = req.params;
-  const { product_id, type, quantity, user_id, reason } = req.body;
+  const { product_id, type, quantity, reason } = req.body;
 
   if (
     !product_id ||
@@ -26,7 +26,7 @@ exports.recordShopSale = (req, res) => {
       p.product_name,
       si.shop_selling_price,
       si.artisan_price,
-      p.retail_price,
+      p.base_price,
       s.contract_type,
       s.commission_rate
     FROM shop_inventory si
@@ -38,7 +38,7 @@ exports.recordShopSale = (req, res) => {
       p.product_name,
       si.shop_selling_price,
       si.artisan_price,
-      p.retail_price,
+      p.base_price,
       s.contract_type,
       s.commission_rate
   `;
@@ -55,7 +55,7 @@ exports.recordShopSale = (req, res) => {
     const commissionRate = Number(result[0].commission_rate || 0);
 
     const shopSellingPrice = Number(result[0].shop_selling_price);
-    const artisanPrice = Number(result[0].artisan_price || result[0].retail_price);
+    const artisanPrice = Number(result[0].artisan_price || result[0].base_price);
     const productName = result[0].product_name;
 
     if (qty > availableQty) {
@@ -81,8 +81,8 @@ exports.recordShopSale = (req, res) => {
 
       db.query(
         `INSERT INTO sales 
-        (shop_id, product_id, quantity, total_amount, selling_price, artisan_price, commission_amount, artisan_earnings, contract_type, user_id) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        (shop_id, product_id, quantity, total_amount, selling_price, artisan_price, commission_amount, artisan_earnings, contract_type) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
           shop_id,
           product_id,
@@ -93,7 +93,6 @@ exports.recordShopSale = (req, res) => {
           commission,
           artisanEarnings,
           contractType,
-          user_id,
         ],
         (err) => {
           if (err) return res.status(500).json({ message: "Failed to record sale" });
@@ -117,8 +116,8 @@ exports.recordShopSale = (req, res) => {
 
     if (type === "returned") {
       db.query(
-        "INSERT INTO returns (shop_id, product_id, quantity, user_id, reason, status) VALUES (?, ?, ?, ?, ?, 'pending')",
-        [shop_id, product_id, qty, user_id, reason],
+        "INSERT INTO returns (shop_id, product_id, quantity, reason, status) VALUES (?, ?, ?, ?, 'pending')",
+        [shop_id, product_id, qty, reason],
         (err) => {
           if (err) {
             return res.status(500).json({ message: "Failed to submit return request" });

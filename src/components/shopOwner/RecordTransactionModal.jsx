@@ -41,7 +41,7 @@ function RecordTransactionModal({
     modalMode === "set_price" &&
     selectedProduct &&
     Number(shopSellingPrice || 0) > 0 &&
-    Number(shopSellingPrice || 0) < Number(selectedProduct.retail_price || 0);
+    Number(shopSellingPrice || 0) < Number(selectedProduct.base_price || 0);
 
   return (
     <Dialog open onOpenChange={(open) => !open && closeModal()}>
@@ -58,7 +58,7 @@ function RecordTransactionModal({
         {selectedProduct && (
           <div className="rounded-md border bg-muted/40 p-3 text-sm">
             <p><span className="font-medium">Available Stock:</span> {selectedProduct.quantity}</p>
-            <p><span className="font-medium">Base Price:</span> {money(selectedProduct.retail_price)}</p>
+            <p><span className="font-medium">Base Price:</span> {money(selectedProduct.base_price)}</p>
           </div>
         )}
 

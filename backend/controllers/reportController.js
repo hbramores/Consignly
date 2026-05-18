@@ -173,7 +173,7 @@ exports.getReports = async (req, res) => {
       ? runQuery(
           `SELECT
              COALESCE(SUM(r.quantity), 0) AS totalReturnsQuantity,
-             COALESCE(SUM(r.quantity * COALESCE(si.artisan_price, p.retail_price, 0)), 0) AS totalReturnsValue
+             COALESCE(SUM(r.quantity * COALESCE(si.artisan_price, p.base_price, 0)), 0) AS totalReturnsValue
            FROM returns r
            JOIN shops sh ON r.shop_id = sh.id
            JOIN products p ON r.product_id = p.id

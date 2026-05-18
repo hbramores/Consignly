@@ -12,6 +12,7 @@ import {
 import "./Sidebar.css";
 
 import { Button } from "@/components/ui/button";
+import Link from "@/components/AppLink";
 import consignlyLogo from "../assets/consignly_logo.png";
 
 import {
@@ -29,6 +30,8 @@ const items = [
 ];
 
 function SidebarContent({ setCurrentPage, onLogout, currentPage, user }) {
+  const activePage = currentPage === "manageShop" ? "shops" : currentPage;
+
   return (
     <>
       <div>
@@ -48,16 +51,23 @@ function SidebarContent({ setCurrentPage, onLogout, currentPage, user }) {
           <p className="text-sm font-medium text-muted-foreground">Menu</p>
           {items.map((item) => {
             const Icon = item.icon;
+            const isActive = activePage === item.key;
 
             return (
               <Button
                 key={item.key}
-                variant={currentPage === item.key ? "secondary" : "ghost"}
-                className="w-full justify-start gap-2"
-                onClick={() => setCurrentPage(item.key)}
+                asChild
+                variant={isActive ? "secondary" : "ghost"}
+                className={`w-full justify-start gap-2 ${isActive ? "border border-primary/30 bg-secondary font-semibold text-primary shadow-sm" : ""}`}
               >
-                <Icon size={16} />
-                <span>{item.label}</span>
+                <Link
+                  to={`/${item.key}`}
+                  active={isActive}
+                  onNavigate={setCurrentPage}
+                >
+                  <Icon size={16} />
+                  <span>{item.label}</span>
+                </Link>
               </Button>
             );
           })}
