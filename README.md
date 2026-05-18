@@ -79,7 +79,7 @@ frontend/
 Setup Instructions
 
 Clone Repository
-git clone https://github.com/[your-username]/consignly.git
+git clone https://github.com/hbramores/consignly.git
 
 Backend Setup
 cd backend
@@ -87,7 +87,6 @@ npm install
 npm run dev
 
 Frontend Setup
-cd frontend
 npm install
 npm run dev
 
