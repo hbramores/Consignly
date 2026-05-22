@@ -7,10 +7,10 @@ const {
   approveUser,
 } = require("../controllers/userController");
 
-router.get("/users", getUsers);
+router.get("/", getUsers);
 
-router.delete("/users/:id", deactivateUser);
+router.delete("/:id", deactivateUser);
 
-router.put("/users/:id/approve", approveUser);
+router.put("/:id/approve", approveUser);
 
 module.exports = router;

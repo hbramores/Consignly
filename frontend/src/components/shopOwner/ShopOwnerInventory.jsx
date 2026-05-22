@@ -59,7 +59,12 @@ function ShopOwnerInventory({
                 </TableCell>
               </TableRow>
             ) : (
-              activeInventory.map((item) => (
+              activeInventory.map((item) => {
+                const needsManualPriceWarning =
+                  item.contract_type === "manual_pricing" &&
+                  Number(item.base_price || 0) >= Number(item.shop_selling_price || 0);
+
+                return (
                 <TableRow key={item.product_id}>
                   <TableCell>
                     {item.image ? (
@@ -94,7 +99,7 @@ function ShopOwnerInventory({
                       {item.contract_type !== "percentage" && (
                         <Button
                           size="sm"
-                          variant="outline"
+                          variant={needsManualPriceWarning ? "destructive" : "outline"}
                           onClick={() => {
                             setSelectedProduct(item);
                             setModalMode("set_price");
@@ -119,7 +124,8 @@ function ShopOwnerInventory({
                     </Button>
                   </TableCell>
                 </TableRow>
-              ))
+                );
+              })
             )}
           </TableBody>
         </Table>

@@ -10,12 +10,12 @@ const {
   updateProduct,
 } = require("../controllers/productController");
 
-router.get("/products/:user_id", getProducts);
+router.get("/:user_id", getProducts);
 
-router.post("/products", upload.single("image"), addProduct);
+router.post("/", upload.single("image"), addProduct);
 
-router.delete("/products/:id", deleteProduct);
+router.delete("/:id", deleteProduct);
 
-router.put("/products/:id", upload.single("image"), updateProduct);
+router.put("/:id", upload.single("image"), updateProduct);
 
 module.exports = router;

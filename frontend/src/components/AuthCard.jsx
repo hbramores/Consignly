@@ -46,8 +46,8 @@ function AuthCard(props){
     }
     
     const url = props.title === "Sign Up"
-        ? 'http://localhost:5000/signup'
-        : 'http://localhost:5000/signin';
+        ? 'http://localhost:5000/auth/signup'
+        : 'http://localhost:5000/auth/signin';
     
     const response = await fetch(url, {
         method: "POST",

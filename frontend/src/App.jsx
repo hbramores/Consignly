@@ -1,5 +1,3 @@
-// here full ng functions na gagamitin mo
-
 import "./App.css"
 import authBg from "./assets/auth_bg.png";
 
@@ -13,11 +11,12 @@ import AdminDashboard from "./pages/AdminDashboard";
 import ShopPortal from "./pages/ShopPortal";
 import ShopOwnerDashboard from "./pages/ShopOwnerDashboard";
 import ManageShop from "./pages/ManageShop";
+import Dashboard from "./pages/Dashboard"
+
 
 import Sidebar from "./components/Sidebar"
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
-import Dashboard from "./pages/Dashboard"
 import { useEffect, useState } from 'react'
 import { Button } from "./components/ui/button";
 import { Toaster } from "./components/ui/toaster";

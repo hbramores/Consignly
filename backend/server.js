@@ -21,9 +21,9 @@ app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
-app.use(authRoutes);
-app.use(userRoutes);
-app.use(productRoutes);
+app.use("/auth", authRoutes);
+app.use("/users", userRoutes);
+app.use("/products", productRoutes);
 app.use("/stocks", stockRoutes);
 app.use("/dashboard", dashboardRoutes);
 app.use("/shops", shopRoutes);

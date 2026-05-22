@@ -3,6 +3,11 @@
 
 const db = require("../db");
 const { USERNAME_PATTERN } = require("../utils/validation");
+const {
+  hashPassword,
+  isHashedPassword,
+  verifyPassword,
+} = require("../utils/passwordHash");
 
 // Signin
 exports.signin = (req, res) => {
@@ -12,42 +17,53 @@ exports.signin = (req, res) => {
     return res.status(400).json({ message: "Invalid username or password format" });
   }
 
-  const sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-  const values = [username, password];
+  const sql = "SELECT * FROM users WHERE username = ?";
 
-  db.query(sql, values, (err, result) => {
+  db.query(sql, [username], (err, result) => {
     if (err) {
       console.error("DB ERROR:", err);
       return res.status(500).json({ message: "Login failed" });
     }
 
-    if (result.length > 0) {
-      const user = result[0];
-
-      if (user.status === "inactive") {
-        return res.status(403).json({
-          message: "This account has been deactivated.",
-        });
-      }
-
-      if (user.status !== "approved") {
-        return res.status(403).json({
-          message: "Your account is still pending admin approval.",
-        });
-      }
-
-      res.json({
-        success: true,
-        message: "Login successful",
-        user: {
-          id: user.id,
-          username: user.username,
-          role: user.role,
-        },
-      });
-    } else {
-      res.status(401).json({ message: "Invalid username or password" });
+    if (result.length === 0 || !verifyPassword(password, result[0].password)) {
+      return res.status(401).json({ message: "Invalid username or password" });
     }
+
+    const user = result[0];
+
+    if (user.status === "inactive") {
+      return res.status(403).json({
+        message: "This account has been deactivated.",
+      });
+    }
+
+    if (user.status !== "approved") {
+      return res.status(403).json({
+        message: "Your account is still pending admin approval.",
+      });
+    }
+
+    if (!isHashedPassword(user.password)) {
+      db.query(
+        "UPDATE users SET password = ? WHERE id = ?",
+        [hashPassword(password), user.id],
+        (updateErr) => {
+          if (updateErr) {
+            console.error("PASSWORD UPGRADE ERROR:", updateErr);
+          }
+        }
+      );
+    }
+
+    res.json({
+      success: true,
+      message: "Login successful",
+      user: {
+        id: user.id,
+        username: user.username,
+        role: user.role,
+      },
+    });
   });
 };
 
@@ -71,7 +87,7 @@ exports.signup = (req, res) => {
     "INSERT INTO users (username, password, role, status) VALUES (?, ?, ?, ?)";
   const normalizedRole = role || "user";
   const initialStatus = normalizedRole === "admin" ? "approved" : "pending";
-  const values = [username, password, normalizedRole, initialStatus];
+  const values = [username, hashPassword(password), normalizedRole, initialStatus];
 
   db.query(sql, values, (err) => {
     if (err) {
